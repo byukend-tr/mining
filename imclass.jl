@@ -7,7 +7,11 @@ images = filter(x->contains(x,".png"),readdir(pwd()))
 
 x = zeros(5000,1024)
 y = zeros(length(images),10)
-
+function extractFeature(image)
+    # now simply return vectorised greyscale image
+    rimg = map(x->convert(Int64,x),rawview(channelview(Gray.(image))))
+    return reshape(rimg, 1, 32^2)
+end
 for i=1:1
 
     # load image
@@ -40,11 +44,7 @@ for i=1:1
     x[i,:] = extractFeature(imm)
 end
 
-function extractFeature(image)
-    # now simply return vectorised greyscale image
-    rimg = map(x->convert(Int64,x),rawview(channelview(Gray.(image))))
-    return reshape(rimg, 1, 32^2)
-end
+
 
 
 # classification step
